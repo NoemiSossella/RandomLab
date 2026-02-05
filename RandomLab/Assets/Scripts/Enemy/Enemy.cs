@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private string currentState;
     public Path path;
+    private GameObject player;
+    public float sightDistance = 20f;
+    public float fieldOfView = 85f;
+    public float eyeHeight; 
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,11 +23,38 @@ public class Enemy : MonoBehaviour
         stateMachine = GetComponent<StateMachine>();
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialise();
+        player = GameObject.findGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CanSeePlayer();
+    }
+    public bool CanSeePlayer()
+    {
+        if (player != null)
+        {
+            //il player è vicino per essere visto?
+            if (Vector3.Distance(transform.position, player.transform.position) < sightDistance)
+            {
+                Vector3 targetDirection = player.transform.position - transform.position - (Vector3.up * eyeHeight);
+                float angleToPlayer = Vector3.Angle(targetDirection, tranfrom.foward);
+                if (angleToPlayer >= -fieldOfView && angleToPlayer <= fieldOfView)
+                {
+                    Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
+                    RaycastHit hitInfo = new RaycastHit();
+                    if (Physics.RayCast(ray, out hitInfo, sightDistance))
+                    {
+                        if (hitInfo.trasform.gameObject == player)
+                        {
+                            Debug.DrawlRay(ray.origin, ray.direction * sightDistance);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
