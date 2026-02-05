@@ -1,5 +1,5 @@
-using System.Collections.Generic;  // Per List<>
-using System.IO;                   // Per Path.Combine
+using System.Collections;
+using System.Collections.Generic;            
 using UnityEngine;
 
 public class Path : MonoBehaviour
@@ -12,6 +12,11 @@ public class Path : MonoBehaviour
     }
 
     void Update()
+    {
+
+    }
+
+    public void Combine()
     {
 
     }

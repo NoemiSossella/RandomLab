@@ -3,10 +3,12 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     public BaseState activeState;
+    public PatrolState patrolState;
 
     public void Initialise()
     {
-        //mettere uno stato di default
+        patrolState = new PatrolState();
+        changeState(patrolState);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,7 +42,7 @@ public class StateMachine : MonoBehaviour
         {
             //nuovo Stato
             activeState.stateMachine = this;
-            //associa lo stato al nemico
+            activeState.enemy = GetComponent<Enemy>();
             activeState.Enter();
 
         }
