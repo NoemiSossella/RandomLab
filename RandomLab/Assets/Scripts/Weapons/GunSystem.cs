@@ -23,7 +23,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
-        if (Inpunt.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
 
         //shoot
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
@@ -37,17 +37,17 @@ public class NewMonoBehaviourScript : MonoBehaviour
         readyToShoot = false;
 
         //RayCast
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.foward, out rayHit, range, whatIsEnemy))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out rayHit, range, whatIsEnemy))
         {
             Debug.Log(rayHit.collider.name);
-            if (rayHit.collider.CompareTag("Enemy")
+            if (rayHit.collider.CompareTag("Enemy"))
             {
-                rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+               // rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
             }
         }
         
         bulletsLeft--;
-        invoke("ResetShot", timeBetweenShooting);
+        Invoke("ResetShot", timeBetweenShooting);
     }
 
     private void ResetShot()
