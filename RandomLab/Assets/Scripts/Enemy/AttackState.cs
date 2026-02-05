@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class AttackState : BaseSate
+public class AttackState : BaseState
 {
     private float moveTimer;
     private float losePlayerTimer;
 
     public override void Enter()
     {
-        
+       
     }
 
     public override void Perform()
